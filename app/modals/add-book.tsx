@@ -188,138 +188,150 @@ export default function AddBookScreen(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#f8f8f8' }}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
-      >
-        <StatusBar style="auto" />
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.coverSection}>
-            {bookData.coverImage ? (
-              <Image
-                source={{ uri: bookData.coverImage }}
-                style={styles.coverImage}
-              />
-            ) : (
-              <View style={styles.coverPlaceholder}>
-                <Ionicons name="book" size={50} color="#aaa" />
-              </View>
-            )}
-            <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
-              <Text style={styles.imageButtonText}>
-                {bookData.coverImage ? 'Change Cover' : 'Add Cover'}
-              </Text>
-            </TouchableOpacity>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
+    >
+      <StatusBar style="auto" />
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <View style={styles.coverSection}>
+          {bookData.coverImage ? (
+            <Image
+              source={{ uri: bookData.coverImage }}
+              style={styles.coverImage}
+            />
+          ) : (
+            <View style={styles.coverPlaceholder}>
+              <Ionicons name="book" size={50} color="#aaa" />
+            </View>
+          )}
+          <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+            <Text style={styles.imageButtonText}>
+              {bookData.coverImage ? 'Change Cover' : 'Add Cover'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.formSection}>
+          <Text style={styles.sectionTitle}>Book Information</Text>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Title *</Text>
+            <TextInput
+              style={[styles.input, errors.title && styles.inputError]}
+              value={bookData.title}
+              onChangeText={(text) => handleChange('title', text)}
+              placeholder="Book title"
+              placeholderTextColor="#aaa"
+            />
+            {errors.title ? <Text style={styles.errorText}>{errors.title}</Text> : null}
           </View>
-          <View style={styles.formSection}>
-            <Text style={styles.sectionTitle}>Book Information</Text>
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Title *</Text>
-              <TextInput
-                style={[styles.input, errors.title && styles.inputError]}
-                value={bookData.title}
-                onChangeText={(text) => handleChange('title', text)}
-                placeholder="Book title"
-                placeholderTextColor="#aaa"
-              />
-              {errors.title ? <Text style={styles.errorText}>{errors.title}</Text> : null}
-            </View>
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Author *</Text>
-              <TextInput
-                style={[styles.input, errors.author && styles.inputError]}
-                value={bookData.author}
-                onChangeText={(text) => handleChange('author', text)}
-                placeholder="Author name"
-                placeholderTextColor="#aaa"
-              />
-              {errors.author ? <Text style={styles.errorText}>{errors.author}</Text> : null}
-            </View>
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Genre</Text>
-              <View style={styles.pickerContainer}>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {GENRES.map((genre) => (
-                    <TouchableOpacity
-                      key={genre}
-                      style={[
-                        styles.genreChip,
-                        bookData.genre === genre && styles.selectedGenreChip,
-                      ]}
-                      onPress={() => handleChange('genre', genre)}
-                    >
-                      <Text
-                        style={[
-                          styles.genreChipText,
-                          bookData.genre === genre && styles.selectedGenreChipText,
-                        ]}
-                      >
-                        {genre}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </ScrollView>
-              </View>
-            </View>
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Page Count</Text>
-              <TextInput
-                style={[styles.input, errors.pageCount && styles.inputError]}
-                value={bookData.pageCount}
-                onChangeText={(text) => handleChange('pageCount', text)}
-                placeholder="Number of pages"
-                placeholderTextColor="#aaa"
-                keyboardType="numeric"
-              />
-              {errors.pageCount ? <Text style={styles.errorText}>{errors.pageCount}</Text> : null}
-            </View>
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>ISBN</Text>
-              <TextInput
-                style={styles.input}
-                value={bookData.isbn}
-                onChangeText={(text) => handleChange('isbn', text)}
-                placeholder="ISBN (optional)"
-                placeholderTextColor="#aaa"
-              />
-            </View>
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Publication Date</Text>
-              <TextInput
-                style={styles.input}
-                value={bookData.publicationDate}
-                onChangeText={(text) => handleChange('publicationDate', text)}
-                placeholder="YYYY-MM-DD (optional)"
-                placeholderTextColor="#aaa"
-              />
-            </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Author *</Text>
+            <TextInput
+              style={[styles.input, errors.author && styles.inputError]}
+              value={bookData.author}
+              onChangeText={(text) => handleChange('author', text)}
+              placeholder="Author name"
+              placeholderTextColor="#aaa"
+            />
+            {errors.author ? <Text style={styles.errorText}>{errors.author}</Text> : null}
           </View>
-          <View style={styles.formSection}>
-            <Text style={styles.sectionTitle}>Reading Status</Text>
-            <View style={styles.statusContainer}>
-              {READING_STATUSES.map((status) => (
-                <TouchableOpacity
-                  key={status.id}
-                  style={[
-                    styles.statusOption,
-                    bookData.status === status.id && styles.selectedStatusOption,
-                  ]}
-                  onPress={() => handleChange('status', status.id)}
-                >
-                  <Text
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Genre</Text>
+            <View style={styles.pickerContainer}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {GENRES.map((genre) => (
+                  <TouchableOpacity
+                    key={genre}
                     style={[
-                      styles.statusText,
-                      bookData.status === status.id && styles.selectedStatusText,
+                      styles.genreChip,
+                      bookData.genre === genre && styles.selectedGenreChip,
                     ]}
+                    onPress={() => handleChange('genre', genre)}
                   >
-                    {status.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+                    <Text
+                      style={[
+                        styles.genreChipText,
+                        bookData.genre === genre && styles.selectedGenreChipText,
+                      ]}
+                    >
+                      {genre}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
             </View>
-            {bookData.status === 'reading' && (
+          </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Page Count</Text>
+            <TextInput
+              style={[styles.input, errors.pageCount && styles.inputError]}
+              value={bookData.pageCount}
+              onChangeText={(text) => handleChange('pageCount', text)}
+              placeholder="Number of pages"
+              placeholderTextColor="#aaa"
+              keyboardType="numeric"
+            />
+            {errors.pageCount ? <Text style={styles.errorText}>{errors.pageCount}</Text> : null}
+          </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>ISBN</Text>
+            <TextInput
+              style={styles.input}
+              value={bookData.isbn}
+              onChangeText={(text) => handleChange('isbn', text)}
+              placeholder="ISBN (optional)"
+              placeholderTextColor="#aaa"
+            />
+          </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Publication Date</Text>
+            <TextInput
+              style={styles.input}
+              value={bookData.publicationDate}
+              onChangeText={(text) => handleChange('publicationDate', text)}
+              placeholder="YYYY-MM-DD (optional)"
+              placeholderTextColor="#aaa"
+            />
+          </View>
+        </View>
+        <View style={styles.formSection}>
+          <Text style={styles.sectionTitle}>Reading Status</Text>
+          <View style={styles.statusContainer}>
+            {READING_STATUSES.map((status) => (
+              <TouchableOpacity
+                key={status.id}
+                style={[
+                  styles.statusOption,
+                  bookData.status === status.id && styles.selectedStatusOption,
+                ]}
+                onPress={() => handleChange('status', status.id)}
+              >
+                <Text
+                  style={[
+                    styles.statusText,
+                    bookData.status === status.id && styles.selectedStatusText,
+                  ]}
+                >
+                  {status.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          {bookData.status === 'reading' && (
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Start Date</Text>
+              <TextInput
+                style={styles.input}
+                value={bookData.startDate}
+                onChangeText={(text) => handleChange('startDate', text)}
+                placeholder="YYYY-MM-DD"
+                placeholderTextColor="#aaa"
+              />
+            </View>
+          )}
+          {bookData.status === 'completed' && (
+            <View>
               <View style={styles.inputGroup}>
                 <Text style={styles.label}>Start Date</Text>
                 <TextInput
@@ -330,57 +342,43 @@ export default function AddBookScreen(): JSX.Element {
                   placeholderTextColor="#aaa"
                 />
               </View>
-            )}
-            {bookData.status === 'completed' && (
-              <View>
-                <View style={styles.inputGroup}>
-                  <Text style={styles.label}>Start Date</Text>
-                  <TextInput
-                    style={styles.input}
-                    value={bookData.startDate}
-                    onChangeText={(text) => handleChange('startDate', text)}
-                    placeholder="YYYY-MM-DD"
-                    placeholderTextColor="#aaa"
-                  />
-                </View>
-                <View style={styles.inputGroup}>
-                  <Text style={styles.label}>End Date</Text>
-                  <TextInput
-                    style={styles.input}
-                    value={bookData.endDate}
-                    onChangeText={(text) => handleChange('endDate', text)}
-                    placeholder="YYYY-MM-DD"
-                    placeholderTextColor="#aaa"
-                  />
-                </View>
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>End Date</Text>
+                <TextInput
+                  style={styles.input}
+                  value={bookData.endDate}
+                  onChangeText={(text) => handleChange('endDate', text)}
+                  placeholder="YYYY-MM-DD"
+                  placeholderTextColor="#aaa"
+                />
               </View>
-            )}
-          </View>
-          <View style={styles.formSection}>
-            <Text style={styles.sectionTitle}>Notes</Text>
-            <TextInput
-              style={styles.notesInput}
-              value={bookData.notes}
-              onChangeText={(text) => handleChange('notes', text)}
-              placeholder="Add your thoughts and notes about this book..."
-              placeholderTextColor="#aaa"
-              multiline
-              numberOfLines={5}
-              textAlignVertical="top"
-            />
-          </View>
-        </ScrollView>
-        <SafeAreaView style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.saveButton}
-            onPress={handleSave}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.saveButtonText}>Save Book</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+            </View>
+          )}
+        </View>
+        <View style={styles.formSection}>
+          <Text style={styles.sectionTitle}>Notes</Text>
+          <TextInput
+            style={styles.notesInput}
+            value={bookData.notes}
+            onChangeText={(text) => handleChange('notes', text)}
+            placeholder="Add your thoughts and notes about this book..."
+            placeholderTextColor="#aaa"
+            multiline
+            numberOfLines={5}
+            textAlignVertical="top"
+          />
+        </View>
+      </ScrollView>
+      <SafeAreaView style={[styles.buttonContainer, { zIndex: 999 }]}>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={handleSave}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.saveButtonText}>Save Book</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -539,9 +537,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonContainer: {
+    padding: 16,
     backgroundColor: '#f8f8f8',
     borderTopWidth: 1,
     borderTopColor: '#e1e1e1',
-    padding: 16,
   },
 });

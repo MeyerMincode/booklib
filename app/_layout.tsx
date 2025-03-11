@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { BookProvider } from '../context/BookContext';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -29,11 +30,31 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+      <BookProvider>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen 
+            name="modals/add-book" 
+            options={{ 
+              presentation: 'modal',
+              title: 'Add Book',
+              headerShown: true,
+            }} 
+          />
+          <Stack.Screen 
+            name="books/[id]" 
+            options={{
+              headerShown: true,
+              title: 'Book Details'
+            }}
+          />
+        </Stack>
+        <StatusBar style="auto" />
+      </BookProvider>
     </ThemeProvider>
   );
 }

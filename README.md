@@ -1,50 +1,135 @@
-# Welcome to your Expo app 👋
+# Core Screen Designs for BookShelf App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 1. Library View
 
-## Get started
+**Purpose:** Main screen that displays the user's book collection
 
-1. Install dependencies
+### Layout Design:
+- **Header**
+  - App title "BookShelf" 
+  - Search icon button (top-right)
+  - Filter/Sort button (top-right)
 
-   ```bash
-   npm install
-   ```
+- **Reading Status Tabs**
+  - Horizontal scrollable tabs:
+    - All Books
+    - Currently Reading
+    - Want to Read
+    - Completed
 
-2. Start the app
+- **Book Grid/List Toggle**
+  - Option to switch between grid view (visual, cover-focused) and list view (text-focused with details)
 
-   ```bash
-    npx expo start
-   ```
+- **Book Collection Display**
+  - Grid View: 2-3 books per row showing covers
+  - List View: Title, author, small thumbnail, reading progress indicator
 
-In the output, you'll find options to open the app in a
+- **Add Book Button**
+  - Floating action button (bottom-right corner)
+  - "+" icon to add new books
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Bottom Navigation**
+  - Library (active)
+  - Stats
+  - Settings
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Interactions:
+- Tapping a book navigates to Book Details screen
+- Pull-to-refresh updates the library
+- Long-press on book shows quick actions (mark as read, delete, etc.)
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 2. Add Book Screen
 
-```bash
-npm run reset-project
-```
+**Purpose:** Form to add/edit book information
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Layout Design:
+- **Header**
+  - "Add New Book" title
+  - Close button (top-left)
+  - Save button (top-right)
 
-## Learn more
+- **Book Cover Section**
+  - Cover image placeholder/preview
+  - "Add Cover" button to upload or take photo
+  - Option to select color for books without covers
 
-To learn more about developing your project with Expo, look at the following resources:
+- **Book Information Form**
+  - Title field (required)
+  - Author field (required)
+  - Genre dropdown/selector
+  - Publication date picker
+  - ISBN field (optional)
+  - Page count field (numeric)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- **Reading Status Selector**
+  - Radio buttons or segmented control:
+    - Want to Read
+    - Currently Reading
+    - Completed
 
-## Join the community
+- **Additional Fields**
+  - Reading start date (optional)
+  - Reading end date (optional)
+  - Personal rating (5-star system)
+  - Notes/description text area
 
-Join our community of developers creating universal apps.
+### Interactions:
+- Form validation for required fields
+- Save button adds the book and returns to Library View
+- Cancel button discards changes and returns to previous screen
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 3. Book Details Screen
+
+**Purpose:** Displays comprehensive information about a specific book
+
+### Layout Design:
+- **Header**
+  - Back button (top-left)
+  - Edit button (top-right)
+  - Delete button or more options menu (three dots)
+
+- **Book Cover Display**
+  - Large cover image
+  - Reading status badge overlay
+
+- **Essential Information**
+  - Title (large, prominent)
+  - Author(s)
+  - Genre
+  - Publication date
+  - Page count
+
+- **Reading Progress Section**
+  - Status indicator (Want to Read/Currently Reading/Completed)
+  - If "Currently Reading": Progress bar/tracker
+  - Start/End dates (if available)
+  - Personal rating (if completed)
+
+- **Details Section**
+  - ISBN
+  - Publisher (if available)
+  - Edition information (if available)
+  - Language
+
+- **Personal Notes**
+  - Expandable text area for user's notes and thoughts
+
+- **Action Buttons**
+  - Update reading status
+  - Update progress (if applicable)
+  - Add notes
+  - Share (future feature)
+
+### Interactions:
+- Edit button navigates to Add Book screen pre-populated with current data
+- Swipe left/right to navigate between books (optional feature)
+- Back button returns to Library View
+- Update reading status allows quick status changes
+
+---
+
+These screen designs provide a foundation for the BookShelf app's core functionality. Each screen focuses on a specific user task while maintaining coherent navigation between them.
